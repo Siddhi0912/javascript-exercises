@@ -6,6 +6,7 @@
 <div id="myChart" style="width:100%; max-width:600px; height:500px;"></div>
 
 <script>
+  
 google.charts.load('current', {'packages':['corechart']});
 google.charts.setOnLoadCallback(drawChart);
 
@@ -13,7 +14,7 @@ function drawChart() {
 
 // Set Data
 const data = google.visualization.arrayToDataTable([
-  ['Contry', 'Mhl'],
+  ['Country', 'Mhl'],
   ['Italy',55],
   ['France',49],
   ['Spain',44],
