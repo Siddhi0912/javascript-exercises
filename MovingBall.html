@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #container {
+            display: flex;
+            gap: 10px;
+        }
+
+        .box {
+            width: 60px;
+            height: 60px;
+            border: 1px solid black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .ball {
+            width: 20px;
+            height: 20px;
+            background: red;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <div class="box">
+            <!-- <div class="ball"></div> -->
+        </div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+    </div>
+    <br>
+    <button id="left">Left</button>
+    <button id="right">Right</button>
+</body>
+
+<script>
+    // let ball = document.querySelector(".ball");/
+    let boxes = document.querySelectorAll(".box");
+    let currentIndex = 0;
+    boxes[currentIndex].innerHTML = 'X';
+    document.getElementById("right").onclick = function () {
+        if (currentIndex < boxes.length - 1) {
+            boxes[currentIndex].innerHTML = '';
+            currentIndex++;
+            // boxes[currentIndex].appendChild(ball);
+            boxes[currentIndex].innerHTML = 'X';
+        }
+    }
+
+    document.getElementById("left").onclick = function () {
+        if (currentIndex > 0) {
+            boxes[currentIndex].innerHTML = '';
+            currentIndex--;
+            // boxes[currentIndex].appendChild(ball);
+            boxes[currentIndex].innerHTML = 'X';
+        }
+    }
+</script>
+
+</html>
