@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Tetris Ball Match</title>
+</head>
+<body>
+
+<h2>Score: <span id="score">0</span></h2>
+<p>Left/Right arrow = move ball. Down arrow = drop faster. If falling ball color matches the ball on top of the stack, they merge and you score!</p>
+
+<canvas id="game" width="360" height="600" style="border:1px solid black;"></canvas>
+
+<script>
+const canvas = document.getElementById("game");
+const ctx = canvas.getContext("2d");
+
+const SIZE = 60;
+const COLS = 6;
+const colors = ["red","blue","green","yellow"];
+
+let stacks = Array.from({length:COLS},()=>[]);
+let score = 0;
+
+let ball = {
+    col:3,
+    y:0,
+    color:randomColor()
+};
+
+function randomColor(){
+    return colors[Math.floor(Math.random()*colors.length)];
+}
+
+function update(){
+
+    ball.y += 2;
+
+    let stop = canvas.height - (stacks[ball.col].length+1)*SIZE;
+
+    if(ball.y >= stop){
+
+        let stack = stacks[ball.col];
+
+        if(stack[stack.length-1] === ball.color){
+
+            stack.pop();
+            score += 10;
+
+        }else{
+
+            stack.push(ball.color);
+
+        }
+
+        document.getElementById("score").innerHTML = score;
+
+        ball = {
+            col:3,
+            y:0,
+            color:randomColor()
+        };
+    }
+
+}
+
+function draw(){
+
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    // Draw stacks
+    for(let c=0;c<COLS;c++){
+
+        for(let r=0;r<stacks[c].length;r++){
+
+            circle(
+                c*SIZE+30,
+                canvas.height-r*SIZE-30,
+                stacks[c][r]
+            );
+
+        }
+
+    }
+
+    // Falling ball
+    circle(ball.col*SIZE+30,ball.y+30,ball.color);
+
+}
+
+function circle(x,y,color){
+
+    ctx.beginPath();
+    ctx.arc(x,y,25,0,Math.PI*2);
+    ctx.fillStyle=color;
+    ctx.fill();
+
+}
+
+document.addEventListener("keydown",e=>{
+
+    if(e.key==="ArrowLeft" && ball.col>0)
+        ball.col--;
+
+    if(e.key==="ArrowRight" && ball.col<COLS-1)
+        ball.col++;
+
+    if(e.key==="ArrowDown")
+        ball.y+=40;
+
+});
+
+function game(){
+
+    update();
+    draw();
+
+    requestAnimationFrame(game);
+
+}
+
+game();
+</script>
+
+</body>
+</html>
